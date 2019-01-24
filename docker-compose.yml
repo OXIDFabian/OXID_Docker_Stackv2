@@ -1,0 +1,83 @@
+version: '3.7'
+
+services:
+
+    db:
+      image: ${DB_IMAGE}
+      restart: always
+      volumes:
+        - ${PWD}/data/mysql/:/var/lib/mysql
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        TZ: Europe/Berlin
+      networks:
+        - internal
+
+    php:
+      image: oxidfabian/oxid-php:${PHP_VERSION}
+      restart: always
+      volumes:
+        - ${PWD}/data/www/:/var/www/html/:cached
+        - ${PWD}/auth.json:/tmp/auth.json
+      depends_on:
+        - db
+      networks:
+        - internal
+      environment:
+        DOMAIN: ${DOMAIN}
+        OXID_VERSION: ${OXID_VERSION}
+        OXID_EDITION: ${OXID_EDITION}
+        OXID_DEMODATA: ${OXID_DEMODATA}
+        MYSQL_HOST: db
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MEMCACHED: ${MEMCACHED}
+        XDEBUG_CONFIG: idekey=PHPSTORM
+
+    webserver:
+      image: ${WEBSERVER}
+      restart: always
+      hostname: ${DOMAIN}
+      depends_on:
+        - php
+      volumes:
+        - ${PWD}/data/www/:/var/www/html/:cached
+        - ${PWD}/config/shop.conf:/etc/nginx/conf.d/default.conf
+        - ${PWD}/config/fastcgi_params.oxid:/etc/nginx/conf.d/fastcgi_params.oxid
+        - ${PWD}/config/upstreams.conf:/etc/nginx/conf.d/upstreams.conf
+      ports:
+        - ${WEBSERVER_PORT}:80
+      networks:
+        internal:
+          aliases:
+            - ${DOMAIN}
+
+    mailhog:
+      image: mailhog/mailhog:latest
+      restart: always
+      ports:
+        - ${MAILHOG_PORT}:8025
+      networks:
+      - internal
+
+    memcached:
+      image: memcached:alpine
+      networks:
+      - internal
+
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - ${ADMINER_PORT}:8080
+      networks:
+      - internal
+
+networks:
+  internal:
