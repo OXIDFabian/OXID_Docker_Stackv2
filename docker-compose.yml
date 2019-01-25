@@ -51,6 +51,7 @@ services:
         - ${PWD}/config/shop.conf:/etc/nginx/conf.d/default.conf
         - ${PWD}/config/fastcgi_params.oxid:/etc/nginx/conf.d/fastcgi_params.oxid
         - ${PWD}/config/upstreams.conf:/etc/nginx/conf.d/upstreams.conf
+        - ${PWD}/config/httpd.conf:/usr/local/apache2/conf/httpd.conf
       ports:
         - ${WEBSERVER_PORT}:80
       networks:
