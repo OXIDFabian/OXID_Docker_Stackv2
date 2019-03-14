@@ -19,11 +19,21 @@ download or git clone this repository
 
 customize the .env file
 
+if you want to install **PE**, **EE**, **ERP** module or the **B2B** module copy your credentials to the auth.json file
+
 * run `docker-compose up -d` to start the container stack
+
+* to keep track of the shop installation enter the following command 
+`docker-compose logs -f php`
 
 * open `http://localhost/` in your browser
 
 
+**OXID admin credentials**
+
+> User: `admin`
+
+> Password: `admin`
 
 **data persistence**
 
