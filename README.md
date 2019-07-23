@@ -45,6 +45,13 @@ set Debug Port in PHPStorm to 9001
 
 Preferences -> Languages & Frameworks -> PHP -> Debug -> xdebug
 
+**run setup manually**
+
+set INSTALL_SHOP=false in the env file
+
+run `docker-compose up -d`
+
+open `http://localhost/Setup`
 
 **Unit tests**
 
