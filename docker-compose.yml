@@ -41,6 +41,7 @@ services:
         MYSQL_PASSWORD: ${MYSQL_PASSWORD}
         MEMCACHED: ${MEMCACHED}
         XDEBUG_CONFIG: idekey=PHPSTORM
+        RUN_COMPOSER: ${RUN_COMPOSER}
 
     webserver:
       image: ${WEBSERVER}
