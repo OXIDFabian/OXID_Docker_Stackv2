@@ -5,7 +5,7 @@ _THIS IS A PRIVATE PROJECT AND NOT OFFICALY SUPPORTED BY OXID ESALES_
 **Stack overview**
 
 * Webserver container (httpd or nginx)
-* PHP container (7.0 - 7.3)
+* PHP container (7.4 - 8.0)
 * DB container (MySQL or MariaDB)
 * Memcached container
 * Mailhog container (default port: 8025)
