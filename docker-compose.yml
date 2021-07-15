@@ -19,7 +19,7 @@ services:
         - internal
 
     php:
-      image: oxidfabian/oxid-php:${PHP_VERSION}
+      image: ghcr.io/oxidfabian/oxid-php:${PHP_VERSION}
       restart: always
       volumes:
         - ${PWD}/data/www/:/var/www/html/:cached
